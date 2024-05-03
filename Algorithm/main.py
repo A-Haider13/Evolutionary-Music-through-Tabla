@@ -11,7 +11,8 @@ tabla_sounds = {
     'dha': AudioSegment.from_file(os.path.join(data_folder, 'dha.wav'), format='wav'),
     'dhin': AudioSegment.from_file(os.path.join(data_folder, 'dhin.wav'), format='wav'),
     'na': AudioSegment.from_file(os.path.join(data_folder, 'na.wav'), format='wav'),
-    'ta': AudioSegment.from_file(os.path.join(data_folder, 'ta.wav'), format='wav')
+    'ta': AudioSegment.from_file(os.path.join(data_folder, 'ta.wav'), format='wav'),
+    'tinak': AudioSegment.from_file(os.path.join(data_folder, 'tinak.wav'), format='wav')
 }
 
 # Define the chromosome representation
@@ -24,16 +25,18 @@ tabla_sounds = {
 # Helper function to create a random chromosome
 def create_random_chromosome(length, sound_keys):
     chromosome = []
+    # Reduce the total interval to create a denser melody
+    max_time = 10000  # 10 seconds
     for i in range(length):
         sound_name = random.choice(sound_keys)
-        start_time = i * (15000 / length)  # evenly spaced within 15 seconds
+        start_time = random.uniform(0, max_time)  # random start within 10 seconds
         volume_db = random.uniform(-10, 10)  # random volume adjustment
         chromosome.append((sound_name, start_time, volume_db))
     return chromosome
 
 # Helper function to generate an audio segment from a chromosome
 def generate_audio_from_chromosome(chromosome):
-    audio = AudioSegment.silent(duration=15000)  # 15 seconds of silence
+    audio = AudioSegment.silent(duration=10000)  # 15 seconds of silence
     for sound_name, start_time, volume_db in chromosome:
         sound_clip = tabla_sounds[sound_name]
         # Apply volume adjustment
@@ -42,17 +45,16 @@ def generate_audio_from_chromosome(chromosome):
         audio = audio.overlay(sound_clip, position=int(start_time))
     return audio
 
-# Define the fitness function
-# A simple fitness function could be to reward even distribution and avoid overlapping sounds.
-# This is a simple example; you can adjust it according to your preference.
+# Fitness function allowing for some overlap
 def fitness_function(chromosome):
-    # Check for overlap and penalize it
+    # Measure overlap and penalize less heavily
     start_times = [start_time for _, start_time, _ in chromosome]
     if len(set(start_times)) < len(start_times):
-        return -10  # heavily penalize overlapping sounds
-    # Reward spread across the duration (simple approach)
+        overlap_penalty = len(start_times) - len(set(start_times))  # count overlapping times
+        return -overlap_penalty  # light penalty for overlap
+    # Reward spread and evenness
     distances = np.diff(sorted(start_times))
-    uniformity_score = np.std(distances)  # lower standard deviation is better
+    uniformity_score = np.std(distances)
     return -uniformity_score
 
 # Genetic operators: Crossover and Mutation
@@ -110,7 +112,7 @@ best_chromosome = max(population, key=fitness_function)
 best_audio = generate_audio_from_chromosome(best_chromosome)
 
 # Save the generated audio to a file
-output_path = 'generated_tabla.wav'
+output_path = 'take3.wav'
 best_audio.export(output_path, format='wav')
 
 print(f"Generated tabla rendition saved to {output_path}")
