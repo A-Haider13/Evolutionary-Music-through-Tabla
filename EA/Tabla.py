@@ -57,20 +57,45 @@ class Tabla(Problem):
     
     def crossover(self,parent1, parent2):
         # Perform crossover to create a new chromosome from two parents
-        new_chromosome1 = parent1[0].copy()
-        new_chromosome2 = parent2[0].copy()
-        fitness1 = self.calculate_fitness(new_chromosome1)
-        fitness2 = self.calculate_fitness(new_chromosome2)
-        offsprings = [(new_chromosome1,fitness1),(new_chromosome2,fitness2)]
+        crossover_point = random.randint(1, self.length - 1)
+
+        child1_solution = parent1[0][:crossover_point] + parent2[0][crossover_point:]
+        child2_solution = parent2[0][:crossover_point] + parent1[0][crossover_point:]
+
+        child1_fitness = self.calculate_fitness(child1_solution)
+        child2_fitness = self.calculate_fitness(child2_solution)
+
+        child1 = (child1_solution, child1_fitness)
+        child2 = (child2_solution, child2_fitness)
+
+        offsprings = [child1, child2]
+
         return offsprings
 
     def mutate(self, chromosome):
-        # Perform mutation by swapping two cities in the chromosome based on mutation rate
-        new_chromosome = chromosome[0].copy() 
-        fitness = chromosome[1]
-
-        new_chromosome = (new_chromosome,fitness)
-        return new_chromosome
+        mutated_chromosome = list(chromosome[0])  # Create a copy of the chromosome
+        
+        for i in range(len(mutated_chromosome)):
+            if random.random() < self.mutation_rate:
+                # Perform mutation on the sound name
+                mutated_chromosome[i] = (
+                    random.choice(list(self.tabla_sounds.keys())),  # Random sound name
+                    mutated_chromosome[i][1],  # Keep original start time
+                    self.mutate_volume(mutated_chromosome[i][2])   # Keep original volume
+                )
+                
+        # Recalculate fitness of mutated chromosome
+        mutated_fitness = self.calculate_fitness(mutated_chromosome)
+        
+        return (mutated_chromosome, mutated_fitness)
+    
+    def mutate_volume(self, volume):
+        # Add random noise to volume within the specified range
+        noise = np.random.uniform(-self.volume_mutation_range, self.volume_mutation_range)
+        mutated_volume = volume + noise
+        # Ensure volume remains within the valid range
+        mutated_volume = max(-10, min(10, mutated_volume))
+        return mutated_volume
 
     def random_chromosome(self):
         #generate random chromosome from TSP set

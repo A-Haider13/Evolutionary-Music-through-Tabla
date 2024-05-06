@@ -2,22 +2,18 @@ import sys
 from EA import EA
 
 def main_test():
-    problem = "Tabla"
-    filename = "qa194.tsp"
     parent_selection = "truncation"
     survivor_selection = "random"
     pop_size = 10
     offspring_size = 2
-    generations_no = 1
+    generations_no = 5
     mutation_rate = 0.5
     iterations = 1
-    length = 10
-    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, problem, parent_selection, survivor_selection, length, filename).run()
+    length = 20
+    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length).run()
 
 
 def main():
-    problem = sys.argv[1]
-    filename = sys.argv[2]
     parent_selection = selection_scheme(sys.argv[3])
     survivor_selection = selection_scheme(sys.argv[4])
     pop_size = int(sys.argv[5])
@@ -25,8 +21,8 @@ def main():
     generations_no = int(sys.argv[7])
     mutation_rate = float(sys.argv[8])
     iterations = int(sys.argv[9])
-    length = 10
-    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, problem, parent_selection, survivor_selection, length, filename).run()
+    length = 20
+    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length).run()
 
 def selection_scheme(scheme):
     if scheme=="fps":

@@ -1,10 +1,8 @@
 import random
 import numpy as np
-from pydub import AudioSegment
-import os
 
 class Problem():
-    def __init__(self,population_size,offspring_size,generations,mutation_rate,iterations,length,filename):
+    def __init__(self,population_size,offspring_size,generations,mutation_rate,iterations,length,filename,data_folder,tabla_sounds):
         self.population_size = population_size
         self.offspring_size = offspring_size
         self.generations = generations
@@ -12,18 +10,10 @@ class Problem():
         self.iterations = iterations
         self.tournament_size = 2
         self.length = length
+        self.volume_mutation_range = 2
         self.filename = filename
-        self.data_folder = 'Algorithm'
-        self.tabla_sounds = {
-            'dha': AudioSegment.from_file(os.path.join(self.data_folder, 'dha.wav'), format='wav'),
-            'dhin': AudioSegment.from_file(os.path.join(self.data_folder, 'dhin.wav'), format='wav'),
-            'na': AudioSegment.from_file(os.path.join(self.data_folder, 'na.wav'), format='wav'),
-            'ta': AudioSegment.from_file(os.path.join(self.data_folder, 'ta.wav'), format='wav'),
-            'tinak': AudioSegment.from_file(os.path.join(self.data_folder, 'tinak.wav'), format='wav'),
-            'ke': AudioSegment.from_file(os.path.join(self.data_folder, 'ke.wav'), format='wav'),
-            're': AudioSegment.from_file(os.path.join(self.data_folder, 're.wav'), format='wav'),
-            'tun': AudioSegment.from_file(os.path.join(self.data_folder, 'tun.wav'), format='wav'),
-        }
+        self.data_folder = data_folder
+        self.tabla_sounds = tabla_sounds
         self.data = self.read_file()
         self.init_population()
     
@@ -34,10 +24,6 @@ class Problem():
             self.population.append(self.random_chromosome()) 
         # print(self.population[0])
         # print(self.population[1])
-        for i in self.population:
-            print(i[1])
-
-
     
     def fitness_prop_selection(self, p=False, s=False):
         if not p and not s:
