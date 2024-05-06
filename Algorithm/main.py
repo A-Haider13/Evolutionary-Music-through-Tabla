@@ -26,17 +26,18 @@ tabla_sounds = {
 def create_random_chromosome(length, sound_keys):
     chromosome = []
     # Reduce the total interval to create a denser melody
-    max_time = 10000  # 10 seconds
+    # max_time = 15000  # 10 seconds
+    start_time = 0  # random start within 10 seconds
     for i in range(length):
-        sound_name = random.choice(sound_keys)
-        start_time = random.uniform(0, max_time)  # random start within 10 seconds
+        sound_name = random.choice(sound_keys)  # random start within 10 seconds
         volume_db = random.uniform(-10, 10)  # random volume adjustment
         chromosome.append((sound_name, start_time, volume_db))
+        start_time += random.uniform(100, 500)  # random interval between 100ms and 500ms
     return chromosome
 
 # Helper function to generate an audio segment from a chromosome
 def generate_audio_from_chromosome(chromosome):
-    audio = AudioSegment.silent(duration=10000)  # 15 seconds of silence
+    audio = AudioSegment.silent(duration=15000)  # 15 seconds of silence
     for sound_name, start_time, volume_db in chromosome:
         sound_clip = tabla_sounds[sound_name]
         # Apply volume adjustment
@@ -82,7 +83,7 @@ num_generations = 20
 mutation_rate = 0.1
 
 # Initialize the population with random chromosomes
-population = [create_random_chromosome(10, list(tabla_sounds.keys())) for _ in range(population_size)]
+population = [create_random_chromosome(30, list(tabla_sounds.keys())) for _ in range(population_size)]
 
 # Run the evolutionary algorithm
 for generation in range(num_generations):
@@ -112,7 +113,7 @@ best_chromosome = max(population, key=fitness_function)
 best_audio = generate_audio_from_chromosome(best_chromosome)
 
 # Save the generated audio to a file
-output_path = 'take3.wav'
+output_path = 'take1.wav'
 best_audio.export(output_path, format='wav')
 
 print(f"Generated tabla rendition saved to {output_path}")
