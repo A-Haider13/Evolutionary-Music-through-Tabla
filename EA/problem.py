@@ -19,7 +19,10 @@ class Problem():
             'dhin': AudioSegment.from_file(os.path.join(self.data_folder, 'dhin.wav'), format='wav'),
             'na': AudioSegment.from_file(os.path.join(self.data_folder, 'na.wav'), format='wav'),
             'ta': AudioSegment.from_file(os.path.join(self.data_folder, 'ta.wav'), format='wav'),
-            'tinak': AudioSegment.from_file(os.path.join(self.data_folder, 'tinak.wav'), format='wav')
+            'tinak': AudioSegment.from_file(os.path.join(self.data_folder, 'tinak.wav'), format='wav'),
+            'ke': AudioSegment.from_file(os.path.join(self.data_folder, 'ke.wav'), format='wav'),
+            're': AudioSegment.from_file(os.path.join(self.data_folder, 're.wav'), format='wav'),
+            'tun': AudioSegment.from_file(os.path.join(self.data_folder, 'tun.wav'), format='wav'),
         }
         self.data = self.read_file()
         self.init_population()
