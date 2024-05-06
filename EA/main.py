@@ -2,16 +2,17 @@ import sys
 from EA import EA
 
 def main_test():
-    problem = "JSSP"
-    filename = "abz5"
-    parent_selection = "tournament_selection_2"
-    survivor_selection = "fitness_prop_selection"
-    pop_size = 30
-    offspring_size = 10
-    generations_no = 50
+    problem = "Tabla"
+    filename = "qa194.tsp"
+    parent_selection = "truncation"
+    survivor_selection = "random"
+    pop_size = 10
+    offspring_size = 2
+    generations_no = 1
     mutation_rate = 0.5
-    iterations = 10
-    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, problem, parent_selection, survivor_selection, filename).run()
+    iterations = 1
+    length = 10
+    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, problem, parent_selection, survivor_selection, length, filename).run()
 
 
 def main():
