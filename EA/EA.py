@@ -61,14 +61,15 @@ class EA:
                     self.instance.population.append(offsprings[0])
                     self.instance.population.append(offsprings[1])
                 survivors = survivor_selection_function(s=True)
-
                 self.instance.population = survivors
                 top_solution_generation = min(self.instance.population, key=lambda x: x[1])
                 worst_solution_generation = max(self.instance.population, key=lambda x: x[1])
 
                 print("Generation: ", j + 1)
-                print("Top solution for this iteration: ", worst_solution_generation[1])
-                print("Worst solution for this iteration: ", top_solution_generation[1])  # Print the fitness value
+                if j==0:
+                    self.generate_audio_from_chromosome(top_solution_generation[0]).export('good_initial.wav', format='wav')
+                print("Top solution for this generation: ", top_solution_generation[1])
+                print("Worst solution for this generation: ", worst_solution_generation[1])  # Print the fitness value
                 if top_solution_iteration[1] >= top_solution_generation[1]:
                     top_solution_iteration = top_solution_generation
 

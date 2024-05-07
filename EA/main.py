@@ -2,14 +2,14 @@ import sys
 from EA import EA
 
 def main_test():
-    parent_selection = "truncation"
-    survivor_selection = "random"
+    parent_selection = "random"
+    survivor_selection = "truncation"
     pop_size = 10
     offspring_size = 2
-    generations_no = 5
-    mutation_rate = 0.5
+    generations_no = 50
+    mutation_rate = 1
     iterations = 1
-    length = 20
+    length = 50
     EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length).run()
 
 

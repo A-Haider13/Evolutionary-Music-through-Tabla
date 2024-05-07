@@ -2,7 +2,7 @@ import random
 import numpy as np
 
 class Problem():
-    def __init__(self,population_size,offspring_size,generations,mutation_rate,iterations,length,filename,data_folder,tabla_sounds):
+    def __init__(self,population_size,offspring_size,generations,mutation_rate,iterations,length,data_folder,tabla_sounds):
         self.population_size = population_size
         self.offspring_size = offspring_size
         self.generations = generations
@@ -11,7 +11,6 @@ class Problem():
         self.tournament_size = 2
         self.length = length
         self.volume_mutation_range = 2
-        self.filename = filename
         self.data_folder = data_folder
         self.tabla_sounds = tabla_sounds
         self.data = self.read_file()

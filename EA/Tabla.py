@@ -3,38 +3,25 @@ import math
 import numpy as np
 from problem import Problem
 
-
 class Tabla(Problem):
 
     def calculate_fitness(self, chromosome):
-        solution = chromosome
         
-        # Initialize fitness components
-        rhythm_fitness = 0
-        timing_fitness = 0
-        dynamic_fitness = 0
-        sound_quality_fitness = 0
-        
-        # Fitness calculation for each aspect
-        rhythm_fitness = self.calculate_rhythm_fitness(solution)
-        timing_fitness = self.calculate_timing_fitness(solution)
-        dynamic_fitness = self.calculate_dynamic_fitness(solution)
-        sound_quality_fitness = self.calculate_sound_quality_fitness(solution)
-        
-        # Aggregate overall fitness
-        overall_fitness = (
-            0.25 * rhythm_fitness +
-            0.25 * timing_fitness +
-            0.25 * dynamic_fitness +
-            0.25 * sound_quality_fitness
-        )
-        
-        return overall_fitness
+        # rhythm_entropy = self.calculate_permutation_entropy(chromosome)
+        intervals = self.calculate_intervals(chromosome)
+        tempo_fitness = self.calculate_tempo(chromosome,intervals)
+        return tempo_fitness
     
     def calculate_rhythm_fitness(self, solution):
         # Calculate rhythm fitness based on the number of unique start times
         start_times = [start_time for _, start_time, _ in solution]
+        # print("-----------------------")
+        # print(start_times)
+        # print(len(start_times))
+        # print(set(start_times))
+        # print(len(start_times))
         rhythm_fitness = len(set(start_times)) / len(start_times)
+        # print(rhythm_fitness)
         return rhythm_fitness
     
     def calculate_timing_fitness(self, solution):
@@ -75,17 +62,36 @@ class Tabla(Problem):
     def mutate(self, chromosome):
         mutated_chromosome = list(chromosome[0])  # Create a copy of the chromosome
         
+        # for i in range(len(mutated_chromosome)):
+        #     if random.random() < self.mutation_rate:
+        #         # Perform mutation on the sound name
+        #         mutated_chromosome[i] = (
+        #             random.choice(list(self.tabla_sounds.keys())),  # Random sound name
+        #             mutated_chromosome[i][1],  # Keep original start time
+        #             self.mutate_volume(mutated_chromosome[i][2])   # Keep original volume
+        #         )
+
+        # print(mutated_chromosome)
+        # print(self.calculate_fitness(mutated_chromosome))
+
         for i in range(len(mutated_chromosome)):
             if random.random() < self.mutation_rate:
-                # Perform mutation on the sound name
-                mutated_chromosome[i] = (
-                    random.choice(list(self.tabla_sounds.keys())),  # Random sound name
-                    mutated_chromosome[i][1],  # Keep original start time
-                    self.mutate_volume(mutated_chromosome[i][2])   # Keep original volume
-                )
-                
+                # mutation_point = random.randint(0, len(mutated_chromosome) - 1)
+                new_start_time = mutated_chromosome[i][1] - random.uniform(200, 400)
+                if new_start_time > 200:
+                    mutated_chromosome[i] = (
+                        mutated_chromosome[i][0],  # Keep original sound name
+                        new_start_time,  # Random start time within 100ms of original time
+                        self.mutate_volume(mutated_chromosome[i][2])   # Keep original volume
+                    )
+
+        # print("post mutation")
+        # print(mutated_chromosome)        
+
         # Recalculate fitness of mutated chromosome
         mutated_fitness = self.calculate_fitness(mutated_chromosome)
+
+        # print(mutated_fitness)
         
         return (mutated_chromosome, mutated_fitness)
     
@@ -105,9 +111,52 @@ class Tabla(Problem):
             sound_name = random.choice(list(self.tabla_sounds.keys()))  # random start within 10 seconds
             volume_db = random.uniform(-10, 10)  # random volume adjustment
             solution.append((sound_name, start_time, volume_db))
-            start_time += random.uniform(100, 500)  # random interval between 100ms and 500ms
+            start_time += random.uniform(500, 1500)  # random interval between 100ms and 500ms
         fitness = self.calculate_fitness(solution)
         chromosome = (solution,fitness)
         return chromosome
 
-    
+    def calculate_intervals(self,chromosome):
+        intervals = []
+        for i in range(1,len(chromosome)):
+            a = chromosome[i][1]-chromosome[i-1][1]
+            intervals.append(a)
+        return intervals
+
+    def calculate_permutation_entropy(self,chromosome,intervals):
+        # Calculate permutation entropy of a chromosome
+        # print("--------------")
+        
+        permutation_count = dict()
+        permutation_count['same'] = 1
+        permutation_count['longer'] = 1
+        permutation_count['shorter'] = 1
+        
+        for i in range(1,len(intervals)):
+            a = intervals[i]-intervals[i-1]
+            # print(a)
+            if abs(a) < 200:
+                permutation_count['same'] += 1
+            elif a < 0:
+                permutation_count['longer'] += 1
+            else:
+                permutation_count['shorter'] += 1
+
+        # print(permutation_count)
+        probabilities = {perm: count / (len(chromosome)-1) for perm, count in permutation_count.items()}
+        # print(probabilities)
+
+        entropy = 0
+        for prob in probabilities.values():
+            entropy -= prob * math.log(prob)
+
+        return entropy
+
+    def calculate_tempo(self,chromosome,intervals):
+        # Calculate the tempo of a chromosome
+        # print(intervals)
+        total_time = chromosome[-1][1]
+        # print(total_time)
+        avg_interval = total_time / (len(chromosome)-1)
+
+        return avg_interval
