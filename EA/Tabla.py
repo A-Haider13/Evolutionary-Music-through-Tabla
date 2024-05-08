@@ -10,14 +10,18 @@ class Tabla(Problem):
         intervals = self.calculate_intervals(chromosome)
         tempo_fitness = self.calculate_tempo(chromosome,intervals)
         normalized_tempo = (tempo_fitness - 200) / (1000 - 200)
-        # print("tempo normalized",normalized_tempo)
-        bonus = self.check_good_pairs(chromosome)
+        bonus = 100-self.check_good_pairs(chromosome)
         normalized_bonus = (100-bonus) / (100)
-        # print("bonus normalized",normalized_bonus)
-        weighted_avg = 0.5*normalized_tempo + 0.5*normalized_bonus
-        # print("weighted-average",weighted_avg*1000)
+        weighted_avg = (0.5*normalized_tempo + 0.5*normalized_bonus)*1000
+
+        if self.mode == 0:
+            return bonus
+        elif self.mode == 1:
+            return tempo_fitness
+        else:
+            return weighted_avg
         
-        return weighted_avg
+        # return weighted_avg*1000
     
     def crossover(self,parent1, parent2):
         # Perform crossover to create a new chromosome from two parents
@@ -106,7 +110,7 @@ class Tabla(Problem):
         return avg_interval
     
     def check_good_pair(self,sound1,sound2):
-        good_pairs = [('dha','dhin'),('dhin','dha'),('tun','na'),('na','tun')]
+        good_pairs = [('ke','tinak'),('tinak','ke'),('re','ta'),('ta','re')]
         if (sound1,sound2) in good_pairs:
             return True
         return False
