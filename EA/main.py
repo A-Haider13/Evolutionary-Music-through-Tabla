@@ -4,10 +4,10 @@ from EA import EA
 def main_test():
     parent_selection = "random"
     survivor_selection = "truncation"
-    pop_size = 10
-    offspring_size = 2
-    generations_no = 50
-    mutation_rate = 1
+    pop_size = 30
+    offspring_size = 10
+    generations_no = 500
+    mutation_rate = 0.5 
     iterations = 1
     length = 50
     EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length).run()

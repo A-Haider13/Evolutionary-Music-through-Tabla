@@ -17,6 +17,7 @@ class Problem():
         self.init_population()
     
     def init_population(self):
+        print("init population")
         self.population = []  # Add this line to initialize the population attribute
         # Initialize the population with random individuals
         for _ in range(self.population_size):
