@@ -2,8 +2,8 @@ import sys
 from EA import EA
 
 def main_test():
-    parent_selection = "random"
-    survivor_selection = "truncation"
+    parent_selection = "rank_based_selection"
+    survivor_selection = "fitness_prop_selection"
     pop_size = 30
     offspring_size = 10
     generations_no = 500

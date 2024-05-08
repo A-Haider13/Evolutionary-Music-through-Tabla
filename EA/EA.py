@@ -73,7 +73,7 @@ class EA:
                 high_solution_generation = max(self.instance.population, key=lambda x: x[1])
                 low_solution_generation = min(self.instance.population, key=lambda x: x[1])
 
-                self.write_to_csv('output_goodpairs.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                self.write_to_csv('output_goodpairs.csv', j + 1, avg_fitness, 100-high_solution_generation[1], 100-low_solution_generation[1])
 
                 print("Generation: ", j + 1)
                 if j==0:
