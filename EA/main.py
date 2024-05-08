@@ -4,9 +4,9 @@ from EA import EA
 def main_test():
     parent_selection = "rank_based_selection"
     survivor_selection = "fitness_prop_selection"
-    pop_size = 30
+    pop_size = 20
     offspring_size = 10
-    generations_no = 500
+    generations_no = 50
     mutation_rate = 0.5 
     iterations = 1
     length = 50
