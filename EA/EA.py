@@ -11,14 +11,16 @@ class EA:
         self.survivor_selection_scheme = survivor_selection_scheme
         self.data_folder = 'Algorithm'
         self.tabla_sounds = {
-            'dha': AudioSegment.from_file(os.path.join(self.data_folder, 'dha.wav'), format='wav'),
-            'dhin': AudioSegment.from_file(os.path.join(self.data_folder, 'dhin.wav'), format='wav'),
-            'na': AudioSegment.from_file(os.path.join(self.data_folder, 'na.wav'), format='wav'),
-            'ta': AudioSegment.from_file(os.path.join(self.data_folder, 'ta.wav'), format='wav'),
-            'tinak': AudioSegment.from_file(os.path.join(self.data_folder, 'tinak.wav'), format='wav'),
-            'ke': AudioSegment.from_file(os.path.join(self.data_folder, 'ke.wav'), format='wav'),
-            're': AudioSegment.from_file(os.path.join(self.data_folder, 're.wav'), format='wav'),
-            'tun': AudioSegment.from_file(os.path.join(self.data_folder, 'tun.wav'), format='wav'),
+            'DHA': AudioSegment.from_file(os.path.join(self.data_folder, 'DHA.wav'), format='wav'),
+            'DHIN': AudioSegment.from_file(os.path.join(self.data_folder, 'DHIN.wav'), format='wav'),
+            'GE': AudioSegment.from_file(os.path.join(self.data_folder, 'GE.wav'), format='wav'),
+            'GHE': AudioSegment.from_file(os.path.join(self.data_folder, 'GHE.wav'), format='wav'),
+            'KA': AudioSegment.from_file(os.path.join(self.data_folder, 'KA.wav'), format='wav'),
+            'KAT': AudioSegment.from_file(os.path.join(self.data_folder, 'KAT.wav'), format='wav'),
+            'TA': AudioSegment.from_file(os.path.join(self.data_folder, 'TA.wav'), format='wav'),
+            'TIN': AudioSegment.from_file(os.path.join(self.data_folder, 'TIN.wav'), format='wav'),
+            'TIT': AudioSegment.from_file(os.path.join(self.data_folder, 'TIT.wav'), format='wav'),
+            'TU': AudioSegment.from_file(os.path.join(self.data_folder, 'TU.wav'), format='wav'), 
         }
         self.length = length
         self.mode = mode
