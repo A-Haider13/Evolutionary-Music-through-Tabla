@@ -112,7 +112,7 @@ class Tabla(Problem):
         return avg_interval
     
     def check_good_pair(self,sound1,sound2):
-        good_pairs = [('DHA','DHIN'),('DHIN','DHA'),('TIN','KA'),('KA','TIN')]
+        good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
         if (sound1,sound2) in good_pairs:
             return True
         return False
