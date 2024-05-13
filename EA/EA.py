@@ -6,7 +6,7 @@ import os
 import csv
 
 class EA: 
-    def __init__(self, population_size, offspring_size, generations, mutation_rate, iterations, parent_selection_scheme, survivor_selection_scheme, length,mode):
+    def __init__(self, population_size, offspring_size, generations, mutation_rate, iterations, parent_selection_scheme, survivor_selection_scheme, length):
         self.parent_selection_scheme = parent_selection_scheme
         self.survivor_selection_scheme = survivor_selection_scheme
         self.data_folder = 'Algorithm'
@@ -23,8 +23,8 @@ class EA:
             'TU': AudioSegment.from_file(os.path.join(self.data_folder, 'TU.wav'), format='wav'), 
         }
         self.length = length
-        self.mode = mode
-        self.instance = Tabla(population_size, offspring_size, generations, mutation_rate, iterations, length, self.data_folder, self.tabla_sounds, self.mode)
+        # self.mode = mode
+        self.instance = Tabla(population_size, offspring_size, generations, mutation_rate, iterations, length, self.data_folder, self.tabla_sounds)
         self.iterations = iterations  # Store the number of iterations
 
     def run(self):
@@ -57,12 +57,7 @@ class EA:
 
             generation_scores_iteration = []  # Initialize list for storing generation-wise scores for current iteration
 
-            if self.mode==0:
-                self.write_headers(f'graph_data/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
-            elif self.mode==1:
-                self.write_headers(f'graph_data/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
-            elif self.mode==2:
-                self.write_headers(f'graph_data/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+            # self.write_headers('output_goodpairs.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
 
             for j in range(self.instance.generations):
                 generation_score = min(self.instance.population, key=lambda x: x[1])[1]  # Get the best fitness for the current generation
@@ -85,12 +80,7 @@ class EA:
                 high_solution_generation = max(self.instance.population, key=lambda x: x[1])
                 low_solution_generation = min(self.instance.population, key=lambda x: x[1])
 
-                if self.mode==0:
-                    self.write_to_csv(f'graph_data/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
-                elif self.mode==1:
-                    self.write_to_csv(f'graph_data/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
-                elif self.mode==2:
-                    self.write_to_csv(f'graph_data/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                # self.write_to_csv('output_goodpairs.csv', j + 1, avg_fitness, 100-high_solution_generation[1], 100-low_solution_generation[1])
 
                 print("Generation: ", j + 1)
                 if j==0:
@@ -117,15 +107,15 @@ class EA:
         # self.save_to_csv(top_solutions, generation_scores)
         # self.plot_graph(top_solutions)
 
-    def write_headers(self,filename,arr):
-        with open(filename, mode='w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(arr)
+    # def write_headers(self,filename,arr):
+    #     with open(filename, mode='w', newline='') as file:
+    #         writer = csv.writer(file)
+    #         writer.writerow(arr)
 
-    def write_to_csv(self,filename, generation, avg_fitness, top_fitness, low_fitness):
-        with open(filename, mode='a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([generation, avg_fitness, top_fitness, low_fitness])
+    # def write_to_csv(self,filename, generation, avg_fitness, top_fitness, low_fitness):
+    #     with open(filename, mode='a', newline='') as file:
+    #         writer = csv.writer(file)
+    #         writer.writerow([generation, avg_fitness, top_fitness, low_fitness])
 
     def generate_audio_from_chromosome(self,chromosome):
         # print("generating for")
