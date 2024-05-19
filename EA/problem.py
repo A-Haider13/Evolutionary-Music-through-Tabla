@@ -2,7 +2,7 @@ import random
 import numpy as np
 
 class Problem():
-    def __init__(self,population_size,offspring_size,generations,mutation_rate,iterations,length,data_folder,tabla_sounds):
+    def __init__(self,population_size,offspring_size,generations,mutation_rate,iterations,length,data_folder,tabla_sounds,good_pairs):
         self.population_size = population_size
         self.offspring_size = offspring_size
         self.generations = generations
@@ -13,18 +13,15 @@ class Problem():
         self.volume_mutation_range = 2
         self.data_folder = data_folder
         self.tabla_sounds = tabla_sounds
-        # self.mode = mode
+        self.good_pairs = good_pairs
         self.data = self.read_file()
         self.init_population()
     
     def init_population(self):
-        print("init population")
         self.population = []  # Add this line to initialize the population attribute
-        # Initialize the population with random individuals
+
         for _ in range(self.population_size):
             self.population.append(self.random_chromosome()) 
-        # print(self.population[0])
-        # print(self.population[1])
     
     def fitness_prop_selection(self, p=False, s=False):
         print("length is",len(self.population))

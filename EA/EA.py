@@ -1,15 +1,13 @@
 from Tabla import Tabla
-import pandas as pd
-import matplotlib.pyplot as plt
 from pydub import AudioSegment
 import os
 import csv
 
 class EA: 
-    def __init__(self, population_size, offspring_size, generations, mutation_rate, iterations, parent_selection_scheme, survivor_selection_scheme, length):
+    def __init__(self, population_size, offspring_size, generations, mutation_rate, iterations, parent_selection_scheme, survivor_selection_scheme, length, good_pairs):
         self.parent_selection_scheme = parent_selection_scheme
         self.survivor_selection_scheme = survivor_selection_scheme
-        self.data_folder = 'Algorithm'
+        self.data_folder = 'Bols'
         self.tabla_sounds = {
             'DHA': AudioSegment.from_file(os.path.join(self.data_folder, 'DHA.wav'), format='wav'),
             'DHIN': AudioSegment.from_file(os.path.join(self.data_folder, 'DHIN.wav'), format='wav'),
@@ -23,8 +21,7 @@ class EA:
             'TU': AudioSegment.from_file(os.path.join(self.data_folder, 'TU.wav'), format='wav'), 
         }
         self.length = length
-        # self.mode = mode
-        self.instance = Tabla(population_size, offspring_size, generations, mutation_rate, iterations, length, self.data_folder, self.tabla_sounds)
+        self.instance = Tabla(population_size, offspring_size, generations, mutation_rate, iterations, length, self.data_folder, self.tabla_sounds, good_pairs)
         self.iterations = iterations  # Store the number of iterations
 
     def run(self):
@@ -65,14 +62,13 @@ class EA:
                 for k in range(0, self.instance.offspring_size, 2):
                     parents = parent_selection_function(p=True)
                     offsprings = self.instance.crossover(parents[0], parents[1])
-                    # print("mutating now")
                     self.instance.population.append(self.instance.mutate(offsprings[0]))
                     self.instance.population.append(self.instance.mutate(offsprings[1]))
                     self.instance.population.append(offsprings[0])
                     self.instance.population.append(offsprings[1])
+
                 survivors = survivor_selection_function(s=True)
-                
-                # fitness for good pairs 100-x[1] else for tempo x[1]
+        
                 fitness_values = [x[1] for x in survivors]
                 avg_fitness = sum(fitness_values) / len(fitness_values)
 
@@ -83,10 +79,13 @@ class EA:
                 # self.write_to_csv('output_goodpairs.csv', j + 1, avg_fitness, 100-high_solution_generation[1], 100-low_solution_generation[1])
 
                 print("Generation: ", j + 1)
+
                 if j==0:
                     self.generate_audio_from_chromosome(high_solution_generation[0]).export('initial.wav', format='wav')
+
                 print("Top solution for this generation: ", low_solution_generation[1])
                 print("Worst solution for this generation: ", high_solution_generation[1])  # Print the fitness value
+
                 if high_solution_iteration[1] <= high_solution_generation[1]:
                     high_solution_iteration = high_solution_generation
 
@@ -103,29 +102,19 @@ class EA:
         self.generate_audio_from_chromosome(highest_solution[0]).export('bad.wav', format='wav')
         self.generate_audio_from_chromosome(lowest_solution[0]).export('good.wav', format='wav')
 
-        # print(top_solutions)
-        # self.save_to_csv(top_solutions, generation_scores)
-        # self.plot_graph(top_solutions)
+    def write_headers(self,filename,arr):
+        with open(filename, mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(arr)
 
-    # def write_headers(self,filename,arr):
-    #     with open(filename, mode='w', newline='') as file:
-    #         writer = csv.writer(file)
-    #         writer.writerow(arr)
-
-    # def write_to_csv(self,filename, generation, avg_fitness, top_fitness, low_fitness):
-    #     with open(filename, mode='a', newline='') as file:
-    #         writer = csv.writer(file)
-    #         writer.writerow([generation, avg_fitness, top_fitness, low_fitness])
+    def write_to_csv(self,filename, generation, avg_fitness, top_fitness, low_fitness):
+        with open(filename, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([generation, avg_fitness, top_fitness, low_fitness])
 
     def generate_audio_from_chromosome(self,chromosome):
-        # print("generating for")
-        intervals = [x[1] for x in chromosome]
-        max_int = max(intervals)
-        min_int = min(intervals)
-        # print("Range of intervals: ", min_int, max_int)
-        good_pairs = self.instance.check_good_pairs(chromosome)
-        # print("Good pairs: ", good_pairs)
-        # print(chromosome)
+        # intervals = [x[1] for x in chromosome]
+        # good_pairs = self.instance.check_good_pairs(chromosome)
         total_time = 0
         for i in range(len(chromosome)):
             total_time += chromosome[i][1]

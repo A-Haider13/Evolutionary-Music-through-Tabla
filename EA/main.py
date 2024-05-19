@@ -11,7 +11,8 @@ def main_test():
     mutation_rate = 0.5 
     iterations = 1
     length = 50
-    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length).run()
+    good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
+    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length, good_pairs).run()
 
 def main():
     parent_selection = selection_scheme(sys.argv[3])
@@ -22,7 +23,8 @@ def main():
     mutation_rate = float(sys.argv[8])
     iterations = int(sys.argv[9])
     length = 20
-    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length).run()
+    good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
+    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length, good_pairs).run()
 
 def selection_scheme(scheme):
     if scheme=="fps":
