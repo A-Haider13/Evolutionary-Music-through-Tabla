@@ -1,8 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-file_path = ".\\graph_data\\Tournament_selection_truncation\\output_goodpairs.csv"
-file_path2 = ".\\graph_data\\random_fitness_prop_selection\\output_tempo.csv"
+file_path = ".\\graph_data\\single_bols\\random_truncation\\output_goodpairs.csv"
+file_path2 = ".\\graph_data\\single_bols\\random_truncation\\output_tempo.csv"
 
 data = pd.read_csv(file_path)
 data2 = pd.read_csv(file_path2)

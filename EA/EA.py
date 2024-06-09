@@ -4,9 +4,11 @@ import os
 import csv
 
 class EA: 
-    def __init__(self, population_size, offspring_size, generations, mutation_rate, iterations, parent_selection_scheme, survivor_selection_scheme, length, good_pairs):
+    def __init__(self, population_size, offspring_size, generations, mutation_rate, iterations, parent_selection_scheme, survivor_selection_scheme, length, good_pairs, mode=None, path=None):
         self.parent_selection_scheme = parent_selection_scheme
         self.survivor_selection_scheme = survivor_selection_scheme
+        self.mode = mode
+        self.path = path
         self.data_folder = 'Bols'
         self.tabla_sounds = {
             'DHA': AudioSegment.from_file(os.path.join(self.data_folder, 'DHA.wav'), format='wav'),
@@ -20,18 +22,18 @@ class EA:
             'TIT': AudioSegment.from_file(os.path.join(self.data_folder, 'TIT.wav'), format='wav'),
             'TU': AudioSegment.from_file(os.path.join(self.data_folder, 'TU.wav'), format='wav'), 
             # Additional 8 Bols
-            'DHINGIN-DHENGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'DHINGIN-DHENGEN.wav'), format='wav'),
-            'DHIT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHIT.wav'), format='wav'),
-            'DHITT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHITT.wav'), format='wav'),
-            'DIN-DIN-DUN': AudioSegment.from_file(os.path.join(self.data_folder, 'DIN-DIN-DUN.wav'), format='wav'),
-            'GADIGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'GADIGEN.wav'), format='wav'),
-            'GHDASN': AudioSegment.from_file(os.path.join(self.data_folder, 'GHDASN.wav'), format='wav'),
-            'KATIT': AudioSegment.from_file(os.path.join(self.data_folder, 'KATIT.wav'), format='wav'),
-            'TIN-TENE': AudioSegment.from_file(os.path.join(self.data_folder, 'TIN-TENE.wav'), format='wav'),
-            'TITT': AudioSegment.from_file(os.path.join(self.data_folder, 'TITT.wav'), format='wav'),
+            # 'DHINGIN-DHENGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'DHINGIN-DHENGEN.wav'), format='wav'),
+            # 'DHIT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHIT.wav'), format='wav'),
+            # 'DHITT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHITT.wav'), format='wav'),
+            # 'DIN-DIN-DUN': AudioSegment.from_file(os.path.join(self.data_folder, 'DIN-DIN-DUN.wav'), format='wav'),
+            # 'GADIGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'GADIGEN.wav'), format='wav'),
+            # 'GHDASN': AudioSegment.from_file(os.path.join(self.data_folder, 'GHDASN.wav'), format='wav'),
+            # 'KATIT': AudioSegment.from_file(os.path.join(self.data_folder, 'KATIT.wav'), format='wav'),
+            # 'TIN-TENE': AudioSegment.from_file(os.path.join(self.data_folder, 'TIN-TENE.wav'), format='wav'),
+            # 'TITT': AudioSegment.from_file(os.path.join(self.data_folder, 'TITT.wav'), format='wav'),
         }
         self.length = length
-        self.instance = Tabla(population_size, offspring_size, generations, mutation_rate, iterations, length, self.data_folder, self.tabla_sounds, good_pairs)
+        self.instance = Tabla(population_size, offspring_size, generations, mutation_rate, iterations, length, self.data_folder, self.tabla_sounds, good_pairs, mode)
         self.iterations = iterations  # Store the number of iterations
 
     def run(self):
@@ -56,6 +58,14 @@ class EA:
         if not callable(parent_selection_function) or not callable(survivor_selection_function):
             print("Invalid selection scheme")
             return
+        
+        if self.mode==0:
+            self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+        elif self.mode==1:
+            self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+        elif self.mode==2:
+            self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+
 
         for i in range(self.instance.iterations):
 
@@ -85,6 +95,13 @@ class EA:
                 self.instance.population = survivors
                 high_solution_generation = max(self.instance.population, key=lambda x: x[1])
                 low_solution_generation = min(self.instance.population, key=lambda x: x[1])
+
+                if self.mode==0:
+                    self.write_to_csv(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                elif self.mode==1:
+                    self.write_to_csv(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                elif self.mode==2:
+                    self.write_to_csv(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
 
                 # self.write_to_csv('output_goodpairs.csv', j + 1, avg_fitness, 100-high_solution_generation[1], 100-low_solution_generation[1])
 

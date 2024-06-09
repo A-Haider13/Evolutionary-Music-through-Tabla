@@ -14,14 +14,14 @@ class Tabla(Problem):
         normalized_bonus = (100-bonus) / (100)
         weighted_avg = (0.5*normalized_tempo + 0.5*normalized_bonus)*1000
 
-        return weighted_avg
+        # return weighted_avg
 
-        # if self.mode == 0:
-        #     return bonus
-        # elif self.mode == 1:
-        #     return tempo_fitness
-        # else:
-        #     return weighted_avg
+        if self.mode == 0:
+            return bonus
+        elif self.mode == 1:
+            return tempo_fitness
+        else:
+            return weighted_avg
         
         # return weighted_avg*1000
     
