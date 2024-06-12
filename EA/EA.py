@@ -58,13 +58,22 @@ class EA:
         if not callable(parent_selection_function) or not callable(survivor_selection_function):
             print("Invalid selection scheme")
             return
-        
+    
         if self.mode==0:
-            self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+            if self.path:
+                self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+            else:
+                self.write_headers('output_goodpairs.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
         elif self.mode==1:
-            self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+            if self.path:
+                self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+            else:
+                self.write_headers('output_tempo.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
         elif self.mode==2:
-            self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+            if self.path:
+                self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+            else:
+                self.write_headers('output_combined.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
 
 
         for i in range(self.instance.iterations):
@@ -97,11 +106,20 @@ class EA:
                 low_solution_generation = min(self.instance.population, key=lambda x: x[1])
 
                 if self.mode==0:
-                    self.write_to_csv(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                    if self.path:
+                        self.write_to_csv(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                    else:
+                        self.write_to_csv('output_goodpairs.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
                 elif self.mode==1:
-                    self.write_to_csv(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                    if self.path:
+                        self.write_to_csv(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                    else:
+                        self.write_to_csv('output_tempo.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
                 elif self.mode==2:
-                    self.write_to_csv(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                    if self.path:
+                        self.write_to_csv(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
+                    else:
+                        self.write_to_csv('output_combined.csv', j + 1, avg_fitness, high_solution_generation[1], low_solution_generation[1])
 
                 # self.write_to_csv('output_goodpairs.csv', j + 1, avg_fitness, 100-high_solution_generation[1], 100-low_solution_generation[1])
 
