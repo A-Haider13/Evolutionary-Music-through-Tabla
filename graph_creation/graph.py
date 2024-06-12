@@ -1,14 +1,14 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-file_path = ".\\graph_data\\double_bols\\rank_based_selection_truncation\\output_goodpairs.csv"
-file_path2 = ".\\graph_data\\double_bols\\rank_based_selection_truncation\\output_tempo.csv"
+file_path = ".\\graph_data\\single_bols\\tournament_selection_truncation\\output_goodpairs.csv"
+file_path2 = ".\\graph_data\\single_bols\\tournament_selection_truncation\\output_tempo.csv"
 
 data = pd.read_csv(file_path)
 data2 = pd.read_csv(file_path2)
 
-filtered_data = data[data['Generation'] <= 50]
-filtered_data2 = data2[data2['Generation'] <= 50]
+filtered_data = data[data['Generation'] <= 100]
+filtered_data2 = data2[data2['Generation'] <= 100]
 
 plt.figure(figsize=(10, 6))
 
