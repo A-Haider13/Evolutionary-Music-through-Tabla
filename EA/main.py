@@ -12,7 +12,9 @@ def main_test():
     iterations = 1
     length = 50
     good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
-    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length, good_pairs).run()
+    path = ""
+    for i in range(3):
+        EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length, good_pairs,i,path).run()
 
 def main():
     parent_selection = selection_scheme(sys.argv[3])
