@@ -22,15 +22,15 @@ class EA:
             'TIT': AudioSegment.from_file(os.path.join(self.data_folder, 'TIT.wav'), format='wav'),
             'TU': AudioSegment.from_file(os.path.join(self.data_folder, 'TU.wav'), format='wav'), 
             # Additional 8 Bols
-            'DHINGIN-DHENGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'DHINGIN-DHENGEN.wav'), format='wav'),
-            'DHIT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHIT.wav'), format='wav'),
-            'DHITT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHITT.wav'), format='wav'),
-            'DIN-DIN-DUN': AudioSegment.from_file(os.path.join(self.data_folder, 'DIN-DIN-DUN.wav'), format='wav'),
-            'GADIGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'GADIGEN.wav'), format='wav'),
-            'GHDASN': AudioSegment.from_file(os.path.join(self.data_folder, 'GHDASN.wav'), format='wav'),
-            'KATIT': AudioSegment.from_file(os.path.join(self.data_folder, 'KATIT.wav'), format='wav'),
-            'TIN-TENE': AudioSegment.from_file(os.path.join(self.data_folder, 'TIN-TENE.wav'), format='wav'),
-            'TITT': AudioSegment.from_file(os.path.join(self.data_folder, 'TITT.wav'), format='wav'),
+            # 'DHINGIN-DHENGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'DHINGIN-DHENGEN.wav'), format='wav'),
+            # 'DHIT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHIT.wav'), format='wav'),
+            # 'DHITT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHITT.wav'), format='wav'),
+            # 'DIN-DIN-DUN': AudioSegment.from_file(os.path.join(self.data_folder, 'DIN-DIN-DUN.wav'), format='wav'),
+            # 'GADIGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'GADIGEN.wav'), format='wav'),
+            # 'GHDASN': AudioSegment.from_file(os.path.join(self.data_folder, 'GHDASN.wav'), format='wav'),
+            # 'KATIT': AudioSegment.from_file(os.path.join(self.data_folder, 'KATIT.wav'), format='wav'),
+            # 'TIN-TENE': AudioSegment.from_file(os.path.join(self.data_folder, 'TIN-TENE.wav'), format='wav'),
+            # 'TITT': AudioSegment.from_file(os.path.join(self.data_folder, 'TITT.wav'), format='wav'),
         }
         self.length = length
         self.instance = Tabla(population_size, offspring_size, generations, mutation_rate, iterations, length, self.data_folder, self.tabla_sounds, good_pairs, mode)
@@ -61,19 +61,19 @@ class EA:
     
         if self.mode==0:
             if self.path:
-                self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+                self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_goodpairs.csv',['Generation', 'Average_Fitness', 'Worst_Fit', 'Best_Fit'])
             else:
-                self.write_headers('output_goodpairs.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+                self.write_headers('output_goodpairs.csv',['Generation', 'Average_Fitness', 'Worst_Fit', 'Best_Fit'])
         elif self.mode==1:
             if self.path:
-                self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+                self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_tempo.csv',['Generation', 'Average_Fitness', 'Worst_Fit', 'Best_Fit'])
             else:
-                self.write_headers('output_tempo.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+                self.write_headers('output_tempo.csv',['Generation', 'Average_Fitness', 'Worst_Fit', 'Best_Fit'])
         elif self.mode==2:
             if self.path:
-                self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+                self.write_headers(f'{self.path}/{self.parent_selection_scheme}_{self.survivor_selection_scheme}/output_combined.csv',['Generation', 'Average_Fitness', 'Worst_Fit', 'Best_Fit'])
             else:
-                self.write_headers('output_combined.csv',['Generation', 'Average_Fitness', 'Best_Fit', 'Worst_Fit'])
+                self.write_headers('output_combined.csv',['Generation', 'Average_Fitness', 'Worst_Fit', 'Best_Fit'])
 
 
         for i in range(self.instance.iterations):
