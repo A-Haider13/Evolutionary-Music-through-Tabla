@@ -22,15 +22,15 @@ class EA:
             'TIT': AudioSegment.from_file(os.path.join(self.data_folder, 'TIT.wav'), format='wav'),
             'TU': AudioSegment.from_file(os.path.join(self.data_folder, 'TU.wav'), format='wav'), 
             # Additional 8 Bols
-            # 'DHINGIN-DHENGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'DHINGIN-DHENGEN.wav'), format='wav'),
-            # 'DHIT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHIT.wav'), format='wav'),
-            # 'DHITT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHITT.wav'), format='wav'),
-            # 'DIN-DIN-DUN': AudioSegment.from_file(os.path.join(self.data_folder, 'DIN-DIN-DUN.wav'), format='wav'),
-            # 'GADIGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'GADIGEN.wav'), format='wav'),
-            # 'GHDASN': AudioSegment.from_file(os.path.join(self.data_folder, 'GHDASN.wav'), format='wav'),
-            # 'KATIT': AudioSegment.from_file(os.path.join(self.data_folder, 'KATIT.wav'), format='wav'),
-            # 'TIN-TENE': AudioSegment.from_file(os.path.join(self.data_folder, 'TIN-TENE.wav'), format='wav'),
-            # 'TITT': AudioSegment.from_file(os.path.join(self.data_folder, 'TITT.wav'), format='wav'),
+            'DHINGIN-DHENGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'DHINGIN-DHENGEN.wav'), format='wav'),
+            'DHIT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHIT.wav'), format='wav'),
+            'DHITT': AudioSegment.from_file(os.path.join(self.data_folder, 'DHITT.wav'), format='wav'),
+            'DIN-DIN-DUN': AudioSegment.from_file(os.path.join(self.data_folder, 'DIN-DIN-DUN.wav'), format='wav'),
+            'GADIGEN': AudioSegment.from_file(os.path.join(self.data_folder, 'GADIGEN.wav'), format='wav'),
+            'GHDASN': AudioSegment.from_file(os.path.join(self.data_folder, 'GHDASN.wav'), format='wav'),
+            'KATIT': AudioSegment.from_file(os.path.join(self.data_folder, 'KATIT.wav'), format='wav'),
+            'TIN-TENE': AudioSegment.from_file(os.path.join(self.data_folder, 'TIN-TENE.wav'), format='wav'),
+            'TITT': AudioSegment.from_file(os.path.join(self.data_folder, 'TITT.wav'), format='wav'),
         }
         self.length = length
         self.instance = Tabla(population_size, offspring_size, generations, mutation_rate, iterations, length, self.data_folder, self.tabla_sounds, good_pairs, mode)

@@ -7,14 +7,14 @@ def main_test():
     survivor_selection = "truncation"
     pop_size = 50
     offspring_size = 10
-    generations_no = 50
+    generations_no = 500
     mutation_rate = 0.5 
     iterations = 1
     length = 50
     good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
     path = ""
-    for i in range(3):
-        EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length, good_pairs,i,path).run()
+    # for i in range(3):
+    EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length, good_pairs,0,path).run()
 
 def main():
     parent_selection = selection_scheme(sys.argv[3])

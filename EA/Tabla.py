@@ -50,7 +50,7 @@ class Tabla(Problem):
         for i in range(len(mutated_chromosome)):
             if random.random() < self.mutation_rate:
                 # mutation_point = random.randint(0, len(mutated_chromosome) - 1)
-                new_start_time = mutated_chromosome[i][1] - random.uniform(200, 400)
+                new_start_time = mutated_chromosome[i][1] - random.uniform(-100, 200)
                 if new_start_time > 200:
                     mutated_chromosome[i] = (
                         mutated_chromosome[i][0],  # Keep original sound name
@@ -62,7 +62,7 @@ class Tabla(Problem):
         for i in range(1,len(mutated_chromosome)-1):
             prefix_pair = self.check_good_pair(mutated_chromosome[i-1][0],mutated_chromosome[i][0])
             suffix_pair = self.check_good_pair(mutated_chromosome[i][0],mutated_chromosome[i+1][0])
-            if ((not prefix_pair) and (not suffix_pair)):
+            if (not prefix_pair):
                 # print("trying to mutate",mutated_chromosome[i][0])
                 if random.random() < self.mutation_rate:
                     sound_name = random.choice(list(self.tabla_sounds.keys()))
@@ -87,10 +87,10 @@ class Tabla(Problem):
         interval = 0
         total_time = 0
         for i in range(self.length):
-            sound_name = random.choice(list(self.tabla_sounds.keys()))  # random start within 10 seconds
+            sound_name = random.choice(list(self.tabla_sounds.keys()))  
             volume_db = random.uniform(-10, 10)  # random volume adjustment
             solution.append((sound_name, interval, volume_db))
-            interval = random.uniform(500, 1500)  # random interval between 100ms and 500ms
+            interval = random.uniform(500, 1500)  # random interval between 500ms and 1500ms
             total_time += interval
         fitness = self.calculate_fitness(solution)
         chromosome = (solution,fitness)
