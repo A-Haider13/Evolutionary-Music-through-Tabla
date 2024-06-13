@@ -8,11 +8,11 @@ def main_test():
     schemes = ["rank_based_selection","truncation","random","fitness_prop_selection","tournament_selection_2"]
     pop_size = 50
     offspring_size = 10
-    generations_no = 200
+    generations_no = 500
     mutation_rate = 0.5 
     iterations = 1
     length = 50
-    path = "graph_data/double_bols"
+    path = "graph_data/single_bols"
     good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
     for PS in schemes:
         ps_name = PS

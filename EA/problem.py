@@ -25,7 +25,7 @@ class Problem():
             self.population.append(self.random_chromosome()) 
     
     def fitness_prop_selection(self, p=False, s=False):
-        print("length is",len(self.population))
+        # print("length is",len(self.population))
         if not p and not s:
             print("Specify whether to use the function for parent or survivor selection")
             return 

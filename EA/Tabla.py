@@ -62,7 +62,7 @@ class Tabla(Problem):
         for i in range(1,len(mutated_chromosome)-1):
             prefix_pair = self.check_good_pair(mutated_chromosome[i-1][0],mutated_chromosome[i][0])
             suffix_pair = self.check_good_pair(mutated_chromosome[i][0],mutated_chromosome[i+1][0])
-            if (not prefix_pair):
+            if (not prefix_pair) and (not suffix_pair):
                 # print("trying to mutate",mutated_chromosome[i][0])
                 if random.random() < self.mutation_rate:
                     sound_name = random.choice(list(self.tabla_sounds.keys()))
