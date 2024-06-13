@@ -2,15 +2,13 @@ import sys
 from EA import EA
 from graph import create_graph
 
-
-
 def main_test():
-    parent_selection = "random"
+    parent_selection = "rank_based_selection"
     survivor_selection = "truncation"
     pop_size = 100
-    offspring_size = 20
+    offspring_size = 33
     generations_no = 250
-    mutation_rate = 0.5 
+    mutation_rate = 0.5
     iterations = 1
     length = 50
     good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
