@@ -67,4 +67,4 @@ if __name__ == "__main__":
         mode=2
     elif mode_txt=="all":
         mode=3
-    main(mode)
+    create_graph(mode)
