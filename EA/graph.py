@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
-def create_graph(mode,config="Random_Truncation",path="Data\\CompoundBols"):
+def create_graph(mode,config="Random_Truncation",path="Data\\5.3\\pop_offspring"):
     file_path = ".\\output_goodpairs.csv"
     file_path2 = ".\\output_tempo.csv"
 

@@ -2,22 +2,20 @@ import sys
 from EA import EA
 from graph import create_graph
 
-
-
 def main_test():
-    parent_selection = "random"
+    parent_selection = "rank_based_selection"
     survivor_selection = "truncation"
-    pop_size = 50
-    offspring_size = 10
+    pop_size = 100
+    offspring_size = 33
     generations_no = 250
-    mutation_rate = 0.5 
+    mutation_rate = 0.5
     iterations = 1
     length = 50
     good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
     path = ""
     for i in range(3):
         EA(pop_size, offspring_size, generations_no, mutation_rate, iterations, parent_selection, survivor_selection, length, good_pairs,i,path).run()
-    create_graph(3,config=f'{offspring_size}')
+    create_graph(3,config=f'pop{pop_size}_off{offspring_size}')
 
 def main():
     parent_selection = selection_scheme(sys.argv[3])
