@@ -12,7 +12,7 @@ def main_test():
     mutation_rate = 0.5 
     iterations = 1
     length = 50
-    path = "graph_data/single_bols"
+    path = "graph_data/CompoundBols"
     good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
     for PS in schemes:
         ps_name = PS
