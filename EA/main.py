@@ -5,10 +5,10 @@ from graph import create_graph
 def main_test():
     parent_selection = "rank_based_selection"
     survivor_selection = "truncation"
-    pop_size = 100
-    offspring_size = 100
+    pop_size = 50
+    offspring_size = 10
     generations_no = 250
-    mutation_rate = 0.5
+    mutation_rate = 0.8
     iterations = 1
     length = 50
     good_pairs = [('DHA','DHIN'),('DHIN','DHA')]
