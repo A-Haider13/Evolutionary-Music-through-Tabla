@@ -6,7 +6,7 @@ def main_test():
     parent_selection = "rank_based_selection"
     survivor_selection = "truncation"
     pop_size = 100
-    offspring_size = 70
+    offspring_size = 100
     generations_no = 250
     mutation_rate = 0.5
     iterations = 1
