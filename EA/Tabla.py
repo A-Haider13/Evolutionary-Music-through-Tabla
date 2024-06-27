@@ -55,7 +55,7 @@ class Tabla(Problem):
                     mutated_chromosome[i] = (
                         mutated_chromosome[i][0],  # Keep original sound name
                         new_start_time,  # Random start time within 100ms of original time
-                        self.mutate_volume(mutated_chromosome[i][2])   # Keep original volume
+                        self.mutate_volume(mutated_chromosome[i][2])   
                     )      
 
         # mutation for good pairs
